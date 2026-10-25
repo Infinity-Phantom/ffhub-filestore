@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -91,7 +92,7 @@ func storeFileHandler(c *gin.Context) {
 
 	if !exists {
 		dst := storage.FilePath(sha512)
-		if err := os.MkdirAll(path.Dir(dst), 0o755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
 			errs.CreateAndLogInternalError(err, "Failed to create directory").AppendDetails("目录创建失败", "文件上传失败").Respond(c)
 			return
 		}
